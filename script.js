@@ -121,31 +121,43 @@ window.addEventListener('load', () => {
     `;
     document.body.appendChild(floatingWhatsApp);
 
-    // Mostra/oculta o botão do WhatsApp baseado no scroll
-    let lastScrollTop = 0;
-    window.addEventListener('scroll', () => {
-        const st = window.pageYOffset || document.documentElement.scrollTop;
-        const floatingBtn = document.querySelector('.floating-whatsapp');
+    // Esconde o botão inicialmente
+    const floatingBtn = document.querySelector('.floating-whatsapp');
+    floatingBtn.style.display = 'none';
+    floatingBtn.style.transition = 'opacity 0.3s ease, transform 0.3s ease';
+
+    // Mostra/oculta o botão do WhatsApp baseado na posição do scroll
+    function toggleWhatsAppButton() {
+        const heroSection = document.querySelector('.hero');
+        if (!heroSection) return;
         
-        if (st > lastScrollTop) {
-            // Rolando para baixo
-            floatingBtn.style.transform = 'translateY(100px)';
-            floatingBtn.style.opacity = '0';
-        } else {
-            // Rolando para cima
-            floatingBtn.style.transform = 'translateY(0)';
-            floatingBtn.style.opacity = '1';
-        }
+        const heroHeight = heroSection.offsetHeight;
+        const scrollPosition = window.scrollY;
         
-        // Mostra o botão apenas após rolar um pouco
-        if (window.scrollY > 300) {
+        // Mostra o botão apenas após passar do banner (hero)
+        if (scrollPosition > heroHeight - 100) {
             floatingBtn.style.display = 'block';
+            setTimeout(() => {
+                floatingBtn.style.opacity = '1';
+                floatingBtn.style.transform = 'translateY(0)';
+            }, 10);
         } else {
-            floatingBtn.style.display = 'none';
+            floatingBtn.style.opacity = '0';
+            floatingBtn.style.transform = 'translateY(100px)';
+            // Esconde o botão após a animação
+            setTimeout(() => {
+                if (window.scrollY <= heroHeight - 100) {
+                    floatingBtn.style.display = 'none';
+                }
+            }, 300);
         }
-        
-        lastScrollTop = st <= 0 ? 0 : st;
-    }, { passive: true });
+    }
+
+    // Adiciona o evento de scroll
+    window.addEventListener('scroll', toggleWhatsAppButton, { passive: true });
+    
+    // Executa uma vez para verificar a posição inicial
+    toggleWhatsAppButton();
 
     // Carregamento otimizado de imagens
     document.addEventListener('DOMContentLoaded', function() {
