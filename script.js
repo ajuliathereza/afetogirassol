@@ -121,43 +121,12 @@ window.addEventListener('load', () => {
     `;
     document.body.appendChild(floatingWhatsApp);
 
-    // Esconde o botão inicialmente
+    // Configura o botão do WhatsApp para ficar sempre visível
     const floatingBtn = document.querySelector('.floating-whatsapp');
-    floatingBtn.style.display = 'none';
+    floatingBtn.style.display = 'block';
+    floatingBtn.style.opacity = '1';
+    floatingBtn.style.transform = 'translateY(0)';
     floatingBtn.style.transition = 'opacity 0.3s ease, transform 0.3s ease';
-
-    // Mostra/oculta o botão do WhatsApp baseado na posição do scroll
-    function toggleWhatsAppButton() {
-        const heroSection = document.querySelector('.hero');
-        if (!heroSection) return;
-        
-        const heroHeight = heroSection.offsetHeight;
-        const scrollPosition = window.scrollY;
-        
-        // Mostra o botão apenas após passar do banner (hero)
-        if (scrollPosition > heroHeight - 100) {
-            floatingBtn.style.display = 'block';
-            setTimeout(() => {
-                floatingBtn.style.opacity = '1';
-                floatingBtn.style.transform = 'translateY(0)';
-            }, 10);
-        } else {
-            floatingBtn.style.opacity = '0';
-            floatingBtn.style.transform = 'translateY(100px)';
-            // Esconde o botão após a animação
-            setTimeout(() => {
-                if (window.scrollY <= heroHeight - 100) {
-                    floatingBtn.style.display = 'none';
-                }
-            }, 300);
-        }
-    }
-
-    // Adiciona o evento de scroll
-    window.addEventListener('scroll', toggleWhatsAppButton, { passive: true });
-    
-    // Executa uma vez para verificar a posição inicial
-    toggleWhatsAppButton();
 
     // Carregamento otimizado de imagens
     document.addEventListener('DOMContentLoaded', function() {
