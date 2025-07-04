@@ -114,7 +114,7 @@ window.addEventListener('load', () => {
     const floatingWhatsApp = document.createElement('div');
     floatingWhatsApp.className = 'floating-whatsapp';
     floatingWhatsApp.innerHTML = `
-        <a href="https://wa.me/SEUNUMERO" class="btn-whatsapp">
+        <a href="https://wa.me/555193833178" class="btn-whatsapp">
             <i class="fab fa-whatsapp"></i>
             <span>Fale Conosco</span>
         </a>
